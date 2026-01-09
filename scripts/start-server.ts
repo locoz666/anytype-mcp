@@ -3,7 +3,8 @@ import { initProxy, loadOpenApiSpec, ValidationError } from "../src/init-server"
 
 async function generateAppKey(specPath?: string) {
   const openApiSpec = await loadOpenApiSpec(specPath);
-  const baseUrl = openApiSpec.servers?.[0]?.url || "http://127.0.0.1:31009";
+  const baseUrl =
+    process.env.OPENAPI_MCP_BASE_URL?.trim() || openApiSpec.servers?.[0]?.url || "http://127.0.0.1:31009";
   const generator = new AppKeyGenerator(baseUrl);
   await generator.generateAppKey();
 }

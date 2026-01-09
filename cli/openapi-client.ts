@@ -30,7 +30,7 @@ async function main() {
 
   const spec = await loadSpec(specPath);
   const converter = new OpenAPIToMCPConverter(spec);
-  const baseUrl = spec.servers?.[0]?.url;
+  const baseUrl = process.env.OPENAPI_MCP_BASE_URL?.trim() || spec.servers?.[0]?.url;
   if (!baseUrl) {
     throw new Error("No base URL found in OpenAPI spec");
   }
